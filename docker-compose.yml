@@ -82,6 +82,8 @@ services:
     environment:
       - BANKING_API_KEY=${BANKING_API_KEY:-BANKING-API-KEY-123}
       - BANKING_API_PORT=8004
+      - MONGODB_URL=${MONGODB_URL}
+      - DATABASE_NAME=${DATABASE_NAME:-banking_db}
     restart: unless-stopped
 
 networks:
