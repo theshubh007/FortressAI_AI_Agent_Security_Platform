@@ -76,19 +76,18 @@ function App() {
             {/* Navigation */}
             <nav className="flex space-x-1">
               {[
+                { id: 'chat', label: 'Banking Assistant', icon: '🤖' },
                 { id: 'rbac', label: 'RBAC Dashboard', icon: '🔐' },
-                { id: 'chat', label: 'Customer Chat', icon: '💬' },
                 { id: 'analyst', label: 'Security Console', icon: '📊' },
                 { id: 'policy', label: 'Policies', icon: '🛡️' }
               ].map((item) => (
                 <button
                   key={item.id}
                   onClick={() => setCurrentView(item.id)}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                    currentView === item.id
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${currentView === item.id
                       ? 'bg-blue-600 text-white shadow-md'
                       : 'text-slate-600 hover:bg-slate-100'
-                  }`}
+                    }`}
                 >
                   <span>{item.icon}</span>
                   <span>{item.label}</span>
@@ -99,10 +98,9 @@ function App() {
             {/* Status */}
             <div className="flex items-center space-x-4">
               <div className={`flex items-center space-x-2 ${getStatusColor()}`}>
-                <div className={`w-2 h-2 rounded-full ${
-                  connectionStatus === 'connected' ? 'bg-emerald-600 animate-pulse' :
-                  connectionStatus === 'offline' ? 'bg-red-600' : 'bg-amber-600'
-                }`}></div>
+                <div className={`w-2 h-2 rounded-full ${connectionStatus === 'connected' ? 'bg-emerald-600 animate-pulse' :
+                    connectionStatus === 'offline' ? 'bg-red-600' : 'bg-amber-600'
+                  }`}></div>
                 <span className="text-sm font-medium">{getStatusText()}</span>
               </div>
               {systemHealth && (
@@ -120,30 +118,30 @@ function App() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-6 py-8">
         {currentView === 'rbac' && (
-          <RBACDashboard 
+          <RBACDashboard
             connectionStatus={connectionStatus}
           />
         )}
-        
+
         {currentView === 'chat' && (
-          <CustomerChat 
+          <CustomerChat
             systemHealth={systemHealth}
             connectionStatus={connectionStatus}
             onIncidentUpdate={fetchIncidents}
           />
         )}
-        
+
         {currentView === 'analyst' && (
-          <AnalystConsole 
+          <AnalystConsole
             systemHealth={systemHealth}
             incidents={incidents}
             connectionStatus={connectionStatus}
             refreshData={checkSystemConnection}
           />
         )}
-        
+
         {currentView === 'policy' && (
-          <PolicyView 
+          <PolicyView
             connectionStatus={connectionStatus}
           />
         )}

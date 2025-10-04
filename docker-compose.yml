@@ -50,6 +50,40 @@ services:
       - ./gateway/data:/app/data
     restart: unless-stopped
 
+  agent-langgraph:
+    build: ./agent-langgraph
+    container_name: agent-langgraph
+    ports:
+      - "8003:8003"
+    networks:
+      - mesh
+      - public
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION:-us-east-1}
+      - LLM_MODEL=${LLM_MODEL:-anthropic.claude-3-5-sonnet-20240620-v1:0}
+      - LLM_TEMPERATURE=0.1
+      - LLM_MAX_TOKENS=1000
+      - BANKING_API_URL=http://banking-api:8004
+      - BANKING_API_KEY=${BANKING_API_KEY:-BANKING-API-KEY-123}
+    restart: unless-stopped
+    depends_on:
+      - banking-api
+
+  banking-api:
+    build: ./banking-api
+    container_name: banking-api
+    ports:
+      - "8004:8004"
+    networks:
+      - mesh
+      - public
+    environment:
+      - BANKING_API_KEY=${BANKING_API_KEY:-BANKING-API-KEY-123}
+      - BANKING_API_PORT=8004
+    restart: unless-stopped
+
 networks:
   mesh:
     internal: true

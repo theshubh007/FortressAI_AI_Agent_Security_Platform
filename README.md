@@ -1,11 +1,14 @@
 # 🛡️ FortressAI - Enterprise AI Agent Security Platform
 
-**Zero-Trust Multi-Layer Defense for AI Agents**
+**Zero-Trust Multi-Layer Defense for AI Agents + Banking Agent**
 
 FortressAI is a production-ready AI agent security platform that protects against prompt injection, data exfiltration, and jailbreak attacks using multi-layer defense: fast regex patterns + LLM semantic analysis + behavioral DNA.
 
+**NEW:** Includes a production-ready **LangGraph Banking Agent** powered by **Anthropic Claude 3.5 Sonnet** with complete **Banking API** backend for secure financial operations.
+
 ## 🎯 Key Features
 
+### Security Features
 - **Multi-Layer Prompt Firewall**: Regex (1-2ms) + PromptShield LLM (50-100ms) = 90%+ detection rate
 - **Behavior DNA**: Learns normal patterns, detects anomalies automatically
 - **Auto-Quarantine**: Compromised agents locked instantly
@@ -13,20 +16,56 @@ FortressAI is a production-ready AI agent security platform that protects agains
 - **Compliance Automation**: Auto-generate NIS2/DORA/SOC2 evidence
 - **Real-Time Dashboard**: Interactive web UI with live monitoring
 
+### Banking Agent Features (NEW)
+- **LangGraph + Claude 3.5 Sonnet**: Advanced multi-step reasoning for banking operations
+- **Banking API**: RESTful API for accounts, transactions, and transfers
+- **Natural Language Interface**: "Transfer $500 to savings" → Executed securely
+- **Tool Orchestration**: Automatic API calls based on user intent
+- **Mock Data**: Safe testing environment with realistic banking scenarios
+
 ## 🏗️ Architecture
 
 ```
 External → 🛡️ Broker (Firewall) → 🤖 Agent (Sandbox) → 🚪 Gateway (Threat Detection) → External APIs
+                                         ↓
+                                  🤖 LangGraph Agent (Port 8003)
+                                         ↓
+                                  🏦 Banking API (Port 8004)
 ```
 
-**3-Layer Security:**
+**Security Layers:**
 1. **Ingress Broker** (Port 8001): Multi-layer firewall, secret redaction, JWT tokens
 2. **AI Agent** (Port 7000): Isolated sandbox, capability enforcement
 3. **Egress Gateway** (Port 9000): Behavior DNA, threat scoring, quarantine
 
+**Banking Stack:**
+4. **LangGraph Agent** (Port 8003): Claude-powered banking assistant with tool orchestration
+5. **Banking API** (Port 8004): Secure banking operations with API key authentication
+
 ## 🚀 Quick Start
 
-See **[docs/QUICKSTART.md](docs/QUICKSTART.md)** for detailed setup instructions.
+### New to FortressAI?
+👉 **[START_HERE.md](START_HERE.md)** - 3-step setup guide (5 minutes)
+
+### Complete Documentation
+- **[INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md)** - Full integration guide
+- **[docs/QUICKSTART.md](docs/QUICKSTART.md)** - Security platform setup
+- **[docs/LANGGRAPH_AGENT.md](docs/LANGGRAPH_AGENT.md)** - Banking agent docs
+- **[docs/BANKING_API.md](docs/BANKING_API.md)** - Banking API reference
+
+### Quick Test
+
+```bash
+# 1. Setup
+cp .env.example .env
+# Add your ANTHROPIC_API_KEY to .env
+
+# 2. Start
+docker-compose up -d
+
+# 3. Test
+python test_integration.py
+```
 
 ### Prerequisites
 - Docker Desktop
