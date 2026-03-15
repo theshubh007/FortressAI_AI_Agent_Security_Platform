@@ -1,0 +1,30 @@
+[
+  {
+    "seq": 0,
+    "timestamp": "2026-07-15T06:56:23.902401+00:00",
+    "action_name": "roll back the canary in the staging namespace",
+    "reversibility_class": "R2",
+    "confidence": 0.91,
+    "threshold": 0.8,
+    "tier": "T4",
+    "autonomous": true,
+    "triggers": [],
+    "rationale": "Calibrated confidence 0.910 clears the R2 gate (0.800); agent acts autonomously at ceiling T4.",
+    "outcome": "rollback succeeded; metrics recovered"
+  },
+  {
+    "seq": 1,
+    "timestamp": "2026-07-15T06:56:23.902564+00:00",
+    "action_name": "rotate the service account credential",
+    "reversibility_class": "R4",
+    "confidence": 0.62,
+    "threshold": 0.95,
+    "tier": "T2",
+    "autonomous": false,
+    "triggers": [
+      "confidence_below_threshold"
+    ],
+    "rationale": "Calibrated confidence 0.620 is below the R4 gate (0.950); drop to T2 (Advise) rather than act autonomously.",
+    "outcome": "escalated; operator selected the alternative hypothesis"
+  }
+]

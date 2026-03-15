@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the accompanying paper."
+title: "Tiered Autonomy: Reference Implementation and Evaluation Harness"
+authors:
+  - family-names: Kathiriya
+    given-names: Satish
+  - family-names: Kothiya
+    given-names: Shubham J.
+  - family-names: Gupta
+    given-names: Sweta
+  - family-names: Jyani
+    given-names: Maulik
+version: 0.1.0
+license: MIT
+repository-code: "https://github.com/theshubh007/FortressAI_AI_Agent_Security_Platform"
+preferred-citation:
+  type: conference-paper
+  title: "Tiered Autonomy: A Human-Machine Cybernetic Architecture for LLM-Based Incident Response"
+  authors:
+    - family-names: Kathiriya
+      given-names: Satish
+    - family-names: Kothiya
+      given-names: Shubham J.
+    - family-names: Gupta
+      given-names: Sweta
+    - family-names: Jyani
+      given-names: Maulik
+  conference:
+    name: "IEEE International Conference on Systems, Man, and Cybernetics (SMC)"
+  year: 2026

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tiered-autonomy"
+version = "0.1.0"
+description = "Reference implementation and evaluation harness for the five-tier autonomy architecture (IEEE SMC 2026)."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [{name = "Satish Kathiriya"}, {name = "Shubham J. Kothiya"},
+           {name = "Sweta Gupta"}, {name = "Maulik Jyani"}]
+keywords = ["incident-response", "tiered-autonomy", "llm-agents",
+            "human-machine-systems", "calibration", "supervisory-control"]
+dependencies = [
+    "numpy>=1.21",
+    "scipy>=1.7",
+    "pyyaml>=5.4",
+    "matplotlib>=3.4",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+tiered-incident = "examples.worked_incident:main"
+
+[tool.setuptools]
+packages = ["tiered_autonomy"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

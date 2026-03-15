@@ -1,0 +1,58 @@
+# Reversibility-typed action taxonomy -- machine-readable form of Table I
+# of "Tiered Autonomy: A Human-Machine Cybernetic Architecture for LLM-Based
+# Incident Response" (IEEE SMC 2026).
+#
+# This file IS the operational policy. In deployment, `threshold` values are
+# fit per-environment from the reliability history of each action class
+# (see tiered_autonomy/calibration.py); the values below are the paper's
+# illustrative anchors. Edit them to match your environment.
+#
+# autonomy:
+#   always -> agent may always act (no confidence gate); e.g. read-only R1
+#   gated  -> agent may act iff calibrated confidence >= threshold
+#   never  -> agent may NEVER act autonomously regardless of confidence (R5).
+#             Blast radius is unbounded, so authority stays with the human (T1).
+
+version: 1
+
+classes:
+  R1:
+    representative_actions: ["metrics query", "log query", "config read"]
+    impact_scope: "None; no state change"
+    recommended_tier: T5
+    threshold: null
+    autonomy: always
+  R2:
+    representative_actions: ["cache warm", "canary rollback", "single service restart"]
+    impact_scope: "Single service; seconds to undo"
+    recommended_tier: T4
+    threshold: 0.80
+    autonomy: gated
+  R3:
+    representative_actions: ["autoscaling change", "feature-flag toggle"]
+    impact_scope: "Service group; minutes to undo"
+    recommended_tier: T4      # T3-T4 band; T4 is the autonomous ceiling
+    threshold: 0.88
+    autonomy: gated
+  R4:
+    representative_actions: ["credential rotation", "IAM change", "data migration"]
+    impact_scope: "Cross-service / cross-tenant; hours"
+    recommended_tier: T3      # T2-T3 band; T3 (execute-then-review) is the ceiling
+    threshold: 0.95
+    autonomy: gated
+  R5:
+    representative_actions: ["destructive delete", "irreversible payment/settlement"]
+    impact_scope: "Unbounded; non-recoverable"
+    recommended_tier: T1
+    threshold: null
+    autonomy: never
+
+# When an Action has no explicit reversibility, classify by matching its name
+# against these rules top-to-bottom (case-insensitive regex). First match wins.
+# An action matching nothing is treated as UNCLASSIFIED -> escalate to the human.
+classification_rules:
+  - {pattern: '\b(quer|read|get|list|describ|inspect|fetch)\w*', class: R1}
+  - {pattern: '\b(rollback|roll ?back|restart|reboot|cache|warm|drain)\w*', class: R2}
+  - {pattern: '\b(autoscal|scal|feature.?flag|toggl|throttl|rerout)\w*', class: R3}
+  - {pattern: '\b(credential|secret|rotat|iam|access|migrat|reindex|schema)\w*', class: R4}
+  - {pattern: '\b(delet|drop|purg|destroy|wip|payment|settlement|transfer|refund)\w*', class: R5}
